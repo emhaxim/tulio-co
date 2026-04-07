@@ -1,15 +1,25 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
 
 type CartItem = {
   id: string;
   quantity: number;
 };
 
-const STORAGE_KEY = 'tulio-cart';
+type CartContextValue = {
+  cartItems: CartItem[];
+  addItem: (id: string) => void;
+  removeItem: (id: string) => void;
+  clearCart: () => void;
+  totalItems: number;
+  mounted: boolean;
+};
 
-export function useCart() {
+const STORAGE_KEY = 'tulio-cart';
+const CartContext = createContext<CartContextValue | undefined>(undefined);
+
+export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [mounted, setMounted] = useState(false);
 
@@ -54,5 +64,19 @@ export function useCart() {
     [cartItems]
   );
 
-  return { cartItems, addItem, removeItem, clearCart, totalItems, mounted };
+  return (
+    <CartContext.Provider
+      value={{ cartItems, addItem, removeItem, clearCart, totalItems, mounted }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+export function useCart() {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
 }

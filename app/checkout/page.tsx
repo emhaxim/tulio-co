@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import products from '../../data/products';
 import { useCart } from '../providers';
+import SiteHeader from '../../components/SiteHeader';
+import SiteFooter from '../../components/SiteFooter';
 
 export default function CheckoutPage() {
   const { cartItems, removeItem, clearCart } = useCart();
@@ -17,8 +19,10 @@ export default function CheckoutPage() {
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   return (
-    <main>
-      <section className="section">
+    <>
+      <SiteHeader />
+      <main>
+        <section className="section">
         <div className="checkout-header">
           <div>
             <span className="hero-tag">Checkout</span>
@@ -93,5 +97,7 @@ export default function CheckoutPage() {
         )}
       </section>
     </main>
+    <SiteFooter />
+  </>
   );
 }

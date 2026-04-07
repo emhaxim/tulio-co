@@ -6,11 +6,12 @@ import Link from 'next/link';
 import products from '../data/products';
 import { useCart } from '../app/providers';
 import TypingText from './TypingText';
+import SiteHeader from './SiteHeader';
+import SiteFooter from './SiteFooter';
 
 export default function HomeClient() {
   const [search, setSearch] = useState('');
   const [selectedTag, setSelectedTag] = useState('All');
-  const [cartOpen, setCartOpen] = useState(false);
   const { cartItems, addItem, removeItem, totalItems } = useCart();
 
   const categories = useMemo(
@@ -51,80 +52,7 @@ export default function HomeClient() {
 
   return (
     <>
-      <header className="site-header">
-        <nav className="site-nav">
-          <div className="site-brand">
-            <span className="brand-mark" aria-hidden="true">🌷</span>
-            <span>Tulio</span>
-          </div>
-          <div className="nav-links">
-            <Link href="#shop">Shop</Link>
-            <Link href="#contact">Contact</Link>
-            <button type="button" className="cart-toggle" onClick={() => setCartOpen(true)}>
-              <span className="cart-icon" aria-hidden="true">🛒</span>
-              <span>Cart</span>
-              {totalItems ? <span className="cart-count">{totalItems}</span> : null}
-            </button>
-          </div>
-        </nav>
-      </header>
-
-      {cartOpen && (
-        <>
-          <div className="drawer-backdrop" onClick={() => setCartOpen(false)} />
-          <aside className="cart-drawer" role="dialog" aria-label="Your basket">
-            <div className="cart-drawer__header">
-              <div>
-                <span className="drawer-title">Your Basket</span>
-                <p className="drawer-subtitle">Review your flowers before checkout.</p>
-              </div>
-              <button type="button" className="drawer-close" onClick={() => setCartOpen(false)}>
-                ✕
-              </button>
-            </div>
-            <div className="cart-drawer__body">
-              {cart.length === 0 ? (
-                <div className="cart-drawer__empty">
-                  <p>Your basket is currently empty.</p>
-                  <button type="button" className="button" onClick={() => {
-                    setCartOpen(false);
-                    setSearch('');
-                    setSelectedTag('All');
-                  }}>
-                    Shop all
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <ul className="cart-list">
-                    {cart.map(({ product, quantity }) => (
-                      <li key={product.id} className="cart-item">
-                        <div>
-                          <strong>{product.name}</strong>
-                          <div style={{ color: '#766e63', marginTop: 4 }}>
-                            {quantity} Ã— ${product.price.toFixed(2)}
-                          </div>
-                        </div>
-                        <button type="button" className="button secondary" onClick={() => removeFromCart(product.id)}>
-                          Remove
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="cart-summary">
-                    <span style={{ fontWeight: 700 }}>Total</span>
-                    <strong>${total.toFixed(2)}</strong>
-                  </div>
-                  <Link href="/checkout" className="button">
-                    Checkout
-                  </Link>
-                </>
-              )}
-            </div>
-          </aside>
-        </>
-      )}
-
+      <SiteHeader />
       <main>
         <section className="section hero">
           <div className="hero-copy">
@@ -224,7 +152,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section className="section cart" id="cart">
+        {/* <section className="section cart" id="cart">
           <div className="cart-header">
             <div>
               <h2>Your cart</h2>
@@ -262,9 +190,9 @@ export default function HomeClient() {
               </div>
             </>
           )}
-        </section>
+        </section> */}
 
-        <section className="section contact" id="contact">
+        {/* <section className="section contact" id="contact">
           <div className="contact-copy">
             <span className="hero-tag">Get in touch</span>
             <h2>Let Tulio help you say it beautifully</h2>
@@ -278,8 +206,9 @@ export default function HomeClient() {
               </a>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
+      <SiteFooter />
     </>
   );
 }
