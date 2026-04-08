@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Red band (left) -->
+  <path d="M80 100 Q60 100 50 120 L30 390 Q25 415 50 420 L230 420 Q255 420 265 400 L285 130 Q290 105 265 100 Z" fill="#D0021B"/>
+  <!-- Navy band (middle) -->
+  <path d="M190 100 L170 420 L330 420 L350 100 Z" fill="#00447C"/>
+  <!-- Teal band (right) -->
+  <path d="M310 100 L290 420 Q315 420 340 420 Q365 420 460 420 Q485 420 490 395 L510 125 Q515 100 490 100 Z" fill="#007B7F"/>
+  <!-- UnionPay text -->
+  <text x="256" y="240" textAnchor="middle" fill="white" fontSize="72" fontWeight="bold" fontFamily="Arial, sans-serif" fontStyle="italic">UnionPay</text>
+  <!-- 银联 Chinese characters -->
+  <text x="256" y="330" textAnchor="middle" fill="white" fontSize="80" fontWeight="bold" fontFamily="Arial, sans-serif" fontStyle="italic">银联</text>
+</svg>
