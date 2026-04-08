@@ -802,15 +802,20 @@ main {
 .site-footer {
   width: 100%;
   margin-top: 48px;
-  padding: 56px 32px 32px;
+  padding: 56px 0 32px;
   background: #132919;
   color: rgba(255, 255, 255, 0.92);
   border-radius: 0;
 }
 
+.footer-inner {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 36px;
   margin-bottom: 40px;
 }

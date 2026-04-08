@@ -33,7 +33,7 @@ export default function SiteHeader({ showNav = true }: { showNav?: boolean }) {
           </div>
           <div className="nav-links">
             <Link href="#shop">Shop</Link>
-            <Link href="#contact">Contact</Link>
+            {/* <Link href="#contact">Contact</Link> */}
             <button type="button" className="cart-toggle" onClick={() => setCartOpen(true)}>
               <span className="cart-icon" aria-hidden="true">🛒</span>
               <span>Cart</span>
