@@ -8,7 +8,7 @@ import { useCart } from '../app/providers';
 
 export default function SiteHeader({ showNav = true }: { showNav?: boolean }) {
   const [cartOpen, setCartOpen] = useState(false);
-  const { cartItems, removeItem, totalItems } = useCart();
+  const { cartItems, addItem, removeItem, decrementItem, totalItems } = useCart();
 
   const cart = useMemo(
     () =>
@@ -80,11 +80,18 @@ export default function SiteHeader({ showNav = true }: { showNav?: boolean }) {
                         </div>
                         <div className="cart-item__details">
                           <strong>{product.name}</strong>
-                          <div className="cart-item__meta">{quantity} × ${product.price.toFixed(2)}</div>
+                          <div className="cart-item__meta">${product.price.toFixed(2)}</div>
+                          <div className="cart-item__actions">
+                            <div className="qty-stepper">
+                              <button type="button" className="qty-btn" onClick={() => decrementItem(product.id)} aria-label="Decrease">−</button>
+                              <span className="qty-value">{quantity}</span>
+                              <button type="button" className="qty-btn" onClick={() => addItem(product.id)} aria-label="Increase">+</button>
+                            </div>
+                            <button type="button" className="cart-item__remove" onClick={() => removeItem(product.id)}>
+                              Remove
+                            </button>
+                          </div>
                         </div>
-                        <button type="button" className="button secondary" onClick={() => removeItem(product.id)}>
-                          Remove
-                        </button>
                       </li>
                     ))}
                   </ul>

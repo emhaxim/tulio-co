@@ -1,6 +1,6 @@
-﻿'use client';
+'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import products from '../data/products';
@@ -9,9 +9,13 @@ import TypingText from './TypingText';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 
+type Product = typeof products[number];
+
 export default function HomeClient() {
   const [search, setSearch] = useState('');
   const [selectedTag, setSelectedTag] = useState('All');
+  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
+  const [modalQty, setModalQty] = useState(1);
   const { cartItems, addItem, removeItem, totalItems } = useCart();
 
   const categories = useMemo(
@@ -37,7 +41,7 @@ export default function HomeClient() {
         const product = products.find((product) => product.id === item.id);
         return product ? { product, quantity: item.quantity } : null;
       })
-      .filter(Boolean) as Array<{ product: typeof products[number]; quantity: number }>;
+      .filter(Boolean) as Array<{ product: Product; quantity: number }>;
   }, [cartItems]);
 
   const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
@@ -50,10 +54,23 @@ export default function HomeClient() {
     removeItem(id);
   };
 
+  const closeModal = () => setActiveProduct(null);
+
+  useEffect(() => {
+    if (!activeProduct) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeModal(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [activeProduct]);
+
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className={activeProduct ? 'page-blurred' : ''}>
         <section className="section hero">
           <div className="hero-copy">
             <div className="hero-tag">Florist · Artful bouquets · deliver at your door step</div>
@@ -86,21 +103,6 @@ export default function HomeClient() {
           </div>
         </section>
 
-        {/* <section className="section features">
-          <div className="feature-card">
-            <h3>Local designer bouquets</h3>
-            <p>Fresh blooms arranged daily with warm tones and long-lasting textures.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Fast delivery</h3>
-            <p>Same-day delivery available for local orders and weekend shipping nationwide.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Custom orders</h3>
-            <p>Tell us your vision and weâ€™ll craft a custom arrangement just for you.</p>
-          </div>
-        </section> */}
-
         <section className="section" id="shop">
           <div className="topbar">
             <div>
@@ -109,12 +111,6 @@ export default function HomeClient() {
                 {filteredProducts.length} beautiful arrangements to explore.
               </p>
             </div>
-            <button type="button" onClick={() => {
-              setSearch('');
-              setSelectedTag('All');
-            }}>
-              Show all
-            </button>
           </div>
           <div className="filters">
             {categories.map((tag) => (
@@ -132,9 +128,14 @@ export default function HomeClient() {
           <div className="listings-grid">
             {filteredProducts.map((product) => (
               <article key={product.id} className="product">
-                <Link href={`/products/${product.id}`} className="product-link">
+                <button
+                  type="button"
+                  className="product-link product-link--btn"
+                  onClick={() => { setActiveProduct(product); setModalQty(1); }}
+                  aria-label={`View ${product.name}`}
+                >
                   <Image src={product.image} alt={product.name} width={500} height={330} />
-                </Link>
+                </button>
                 <div className="product-body">
                   <div>
                     <h3>{product.name}</h3>
@@ -151,65 +152,74 @@ export default function HomeClient() {
             ))}
           </div>
         </section>
-
-        {/* <section className="section cart" id="cart">
-          <div className="cart-header">
-            <div>
-              <h2>Your cart</h2>
-              <p style={{ margin: '4px 0 0', color: '#6d655c' }}>
-                {totalItems} item{totalItems === 1 ? '' : 's'} in your bag.
-              </p>
-            </div>
-            <Link href="/checkout" className="button">
-              Proceed to checkout
-            </Link>
-          </div>
-
-          {cart.length === 0 ? (
-            <p style={{ color: '#766e63' }}>Your cart is empty. Add a bouquet to get started.</p>
-          ) : (
-            <>
-              <ul className="cart-list">
-                {cart.map(({ product, quantity }) => (
-                  <li key={product.id} className="cart-item">
-                    <div>
-                      <strong>{product.name}</strong>
-                      <div style={{ color: '#766e63', marginTop: 4 }}>
-                        {quantity} Ã— ${product.price.toFixed(2)}
-                      </div>
-                    </div>
-                    <button type="button" onClick={() => removeFromCart(product.id)}>
-                      Remove
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <div className="cart-summary">
-                <span style={{ fontWeight: 700 }}>Total</span>
-                <strong>${total.toFixed(2)}</strong>
-              </div>
-            </>
-          )}
-        </section> */}
-
-        {/* <section className="section contact" id="contact">
-          <div className="contact-copy">
-            <span className="hero-tag">Get in touch</span>
-            <h2>Let Tulio help you say it beautifully</h2>
-            <p>Questions about delivery, custom arrangements, or event work? Reach out and weâ€™ll create the perfect bouquet.</p>
-            <div className="contact-actions">
-              <a href="mailto:hello@tulio.com" className="button">
-                Email us
-              </a>
-              <a href="tel:+1234567890" className="button secondary">
-                Call Tulio
-              </a>
-            </div>
-          </div>
-        </section> */}
       </main>
       <SiteFooter />
+
+      {activeProduct && (
+        <>
+          <div className="product-modal-backdrop" onClick={closeModal} aria-hidden="true" />
+          <div className="product-modal" role="dialog" aria-modal="true" aria-label={activeProduct.name}>
+            <div className="product-modal__media">
+              <Image
+                src={activeProduct.image}
+                alt={activeProduct.name}
+                width={700}
+                height={560}
+              />
+            </div>
+            <div className="product-modal__copy">
+              <button className="product-modal__close" type="button" onClick={closeModal} aria-label="Close">
+                ✕
+              </button>
+              <div className="hero-tag">Tulio floral studio</div>
+              <h2>{activeProduct.name}</h2>
+              <p className="detail-description">{activeProduct.description}</p>
+              <div className="product-meta" style={{ gap: '14px', marginTop: '24px' }}>
+                <span className="badge">{activeProduct.tag}</span>
+                <strong style={{ fontSize: '1.35rem' }}>${activeProduct.price.toFixed(2)}</strong>
+              </div>
+              <div style={{ marginTop: '24px' }}>
+                <div className="qty-label">QUANTITY</div>
+                <div className="qty-stepper">
+                  <button
+                    type="button"
+                    className="qty-btn"
+                    onClick={() => setModalQty((q) => Math.max(1, q - 1))}
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <span className="qty-value">{modalQty}</span>
+                  <button
+                    type="button"
+                    className="qty-btn"
+                    onClick={() => setModalQty((q) => q + 1)}
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ marginTop: '24px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <button type="button" className="button secondary" onClick={closeModal}>
+                  Back to shop
+                </button>
+                <button
+                  type="button"
+                  className="button"
+                  onClick={() => {
+                    for (let i = 0; i < modalQty; i++) addToCart(activeProduct.id);
+                    closeModal();
+                  }}
+                >
+                  Add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
-

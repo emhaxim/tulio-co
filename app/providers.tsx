@@ -11,6 +11,7 @@ type CartContextValue = {
   cartItems: CartItem[];
   addItem: (id: string) => void;
   removeItem: (id: string) => void;
+  decrementItem: (id: string) => void;
   clearCart: () => void;
   totalItems: number;
   mounted: boolean;
@@ -57,6 +58,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const decrementItem = (id: string) => {
+    setCartItems((prev) =>
+      prev
+        .map((item) => item.id === id ? { ...item, quantity: item.quantity - 1 } : item)
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
   const clearCart = () => setCartItems([]);
 
   const totalItems = useMemo(
@@ -66,7 +75,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addItem, removeItem, clearCart, totalItems, mounted }}
+      value={{ cartItems, addItem, removeItem, decrementItem, clearCart, totalItems, mounted }}
     >
       {children}
     </CartContext.Provider>
