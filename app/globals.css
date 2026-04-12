@@ -104,9 +104,10 @@ main {
 
 .input-group {
   display: flex;
+  align-items: center;
   width: min(100%, 380px);
-  gap: 10px;
-  padding: 6px;
+  gap: 0;
+  padding: 4px 4px 4px 0;
   border-radius: 999px;
   background: var(--white);
   border: 1px solid var(--green-20);
@@ -115,7 +116,7 @@ main {
 
 .input-group input {
   flex: 1;
-  padding: 14px 18px;
+  padding: 13px 18px;
   border: none;
   border-radius: 999px;
   background: transparent;
@@ -146,6 +147,29 @@ main {
   color: #fff;
   padding: 14px 22px;
   transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* Search icon button inside the pill */
+.input-group .search-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.input-group .search-btn:hover {
+  background: var(--green-85);
 }
 
 .input-group button:hover,
@@ -709,7 +733,7 @@ main {
 .listings-grid {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
 .product {
@@ -869,15 +893,41 @@ main {
 }
 
 @media (max-width: 680px) {
-  .hero-copy,
+  .hero-copy {
+    padding: 24px 20px;
+    border-radius: 24px;
+  }
+
   .hero-media,
   .feature-card,
   .cart {
     border-radius: 24px;
   }
 
-  .input-group,
-  .cta-row,
+  .hero-media {
+    min-height: 280px;
+  }
+
+  /* Stack search bar + CTA button vertically, both full-width */
+  .cta-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .cta-row .button {
+    text-align: center;
+    padding: 16px 20px;
+    font-size: 1rem;
+  }
+
+  /* Keep the pill shape — don't collapse it to column */
+  .input-group {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
+
   .product-meta,
   .cart-summary {
     flex-direction: column;
