@@ -29,17 +29,19 @@ export default function SiteHeader({ showNav = true }: { showNav?: boolean }) {
         <nav className="site-nav">
           <div className="site-brand">
             <span className="brand-mark" aria-hidden="true">🌷</span>
-            <span>Bouqora</span>
+            <span>Bud & Petal</span>
           </div>
-          <div className="nav-links">
-            <Link href="#shop">Shop</Link>
-            {/* <Link href="#contact">Contact</Link> */}
-            <button type="button" className="cart-toggle" onClick={() => setCartOpen(true)}>
-              <span className="cart-icon" aria-hidden="true">🛒</span>
-              <span>Cart</span>
-              {totalItems ? <span className="cart-count">{totalItems}</span> : null}
-            </button>
-          </div>
+          {showNav && (
+            <div className="nav-links">
+              <Link href="#shop">Shop</Link>
+              {/* <Link href="#contact">Contact</Link> */}
+              <button type="button" className="cart-toggle" onClick={() => setCartOpen(true)}>
+                <span className="cart-icon" aria-hidden="true">🛒</span>
+                <span>Cart</span>
+                {totalItems ? <span className="cart-count">{totalItems}</span> : null}
+              </button>
+            </div>
+          )}
         </nav>
       </header>
 

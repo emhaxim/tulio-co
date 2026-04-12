@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import products from '../../data/products';
@@ -70,7 +71,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader showNav={false} />
       <main>
         <section className="section">
         <div className="checkout-header">
@@ -98,7 +99,14 @@ export default function CheckoutPage() {
               <ul className="cart-list">
                 {items.map(({ product, quantity }) => (
                   <li key={product.id} className="cart-item">
-                    <div>
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={64}
+                      height={64}
+                      style={{ borderRadius: 10, objectFit: 'cover', flexShrink: 0 }}
+                    />
+                    <div style={{ flex: 1 }}>
                       <strong>{product.name}</strong>
                       <div style={{ color: '#766e63', marginTop: 4 }}>
                         {quantity} × ${product.price.toFixed(2)}

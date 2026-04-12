@@ -7,7 +7,7 @@ export default function SiteFooter() {
     <footer className="site-footer">
       <div className="footer-inner">
       <div className="footer-brand-row">
-        <span className="footer-logo">🌷 Bouqora</span>
+        <span className="footer-logo">🌷 Bud & Petal</span>
       </div>
 
       <div className="footer-grid">
@@ -46,7 +46,7 @@ export default function SiteFooter() {
               <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.99H7.898v-2.888h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.888h-2.33v6.99C18.343 21.128 22 16.991 22 12z" />
             </svg>
           </a>
-          <a href="https://instagram.com/bouqora" target="_blank" rel="noreferrer" aria-label="Instagram">
+          <a href="https://instagram.com/Bud & Petal" target="_blank" rel="noreferrer" aria-label="Instagram">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="5" />
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -65,7 +65,7 @@ export default function SiteFooter() {
           </a>
         </div>
         <div className="footer-copy">
-          <p>© 2026 Bouqora. All Rights Reserved.</p>
+          <p>© 2026 Bud & Petal. All Rights Reserved.</p>
         </div>
       </div>
       </div>
