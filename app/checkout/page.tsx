@@ -39,7 +39,9 @@ export default function CheckoutPage() {
   const { cartItems, removeItem, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('payfast');
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [fields, setFields] = useState({ name: '', email: '', address: '', city: '', phone: '' });
+  const [fields, setFields] = useState({ name: '', email: '', address: '', city: '', phone: '', notes: '' });
+  const [submitting, setSubmitting] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   function validate() {
     const newErrors: Record<string, string> = {};
@@ -54,9 +56,35 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   }
 
-  function handlePlaceOrder() {
-    if (validate()) {
-      alert('Order placed successfully!');
+  async function handlePlaceOrder() {
+    if (!validate()) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...fields,
+          paymentMethod,
+          items: items.map((i) => ({
+            name: i.product.name,
+            quantity: i.quantity,
+            price: i.product.price,
+          })),
+          total,
+        }),
+      });
+      if (res.ok) {
+        setOrderPlaced(true);
+        clearCart();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        alert(`Email error: ${data.error ?? 'Unknown error'}\n\nCheck the terminal for details.`);
+      }
+    } catch {
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -85,7 +113,16 @@ export default function CheckoutPage() {
           </Link>
         </div>
 
-        {items.length === 0 ? (
+        {orderPlaced ? (
+          <div className="empty-state" style={{ padding: '56px 28px' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🌷</div>
+            <h2 style={{ margin: '0 0 10px', color: 'var(--green)' }}>Order placed!</h2>
+            <p style={{ color: '#6d655c', marginBottom: '28px', maxWidth: 360, marginLeft: 'auto', marginRight: 'auto' }}>
+              Thank you for your order. We&apos;ve received it and will be in touch shortly.
+            </p>
+            <Link href="/" className="button">Back to shop</Link>
+          </div>
+        ) : items.length === 0 ? (
           <div className="empty-state">
             <p>Your cart is empty. Add a bouquet and return here to checkout.</p>
             <Link href="/" className="button">
@@ -202,7 +239,11 @@ export default function CheckoutPage() {
                 </label>
                 <label>
                   Special notes
-                  <textarea placeholder="Leave a note for the florist." />
+                  <textarea
+                    placeholder="Leave a note for the florist."
+                    value={fields.notes}
+                    onChange={e => setFields(f => ({ ...f, notes: e.target.value }))}
+                  />
                 </label>
 
                 <div className="payment-section">
@@ -245,14 +286,20 @@ export default function CheckoutPage() {
                   </ul>
                 </div>
 
-                <button type="button" className="button" onClick={handlePlaceOrder}>
-                  Place order
+                <button
+                  type="button"
+                  className="button"
+                  onClick={handlePlaceOrder}
+                  disabled={submitting}
+                  style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+                >
+                  {submitting ? 'Placing order…' : 'Place order'}
                 </button>
               </form>
             </div>
           </div>
         )}
-      </section>
+        </section>
     </main>
     <SiteFooter />
   </>

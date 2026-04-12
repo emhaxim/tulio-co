@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -171,7 +171,7 @@ export default function HomeClient() {
               <button className="product-modal__close" type="button" onClick={closeModal} aria-label="Close">
                 ✕
               </button>
-              <div className="hero-tag">Tulio floral studio</div>
+              <div className="hero-tag">floral studio</div>
               <h2>{activeProduct.name}</h2>
               <p className="detail-description">{activeProduct.description}</p>
               <div className="product-meta" style={{ gap: '14px', marginTop: '24px' }}>

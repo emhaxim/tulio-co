@@ -3,8 +3,8 @@ import './globals.css';
 import { ClientLayout } from './client-layout';
 
 export const metadata: Metadata = {
-  title: 'Bouqora',
-  description: 'Bouqora flower shop landing page with listings, search, and cart functionality.',
+  title: 'Bud & Petal',
+  description: 'Bud & Petal flower shop landing page with listings, search, and cart functionality.',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',

@@ -28,7 +28,7 @@ export default function ProductPage({ params: { id } }: PageProps) {
             <Image src={product.image} alt={product.name} width={900} height={700} />
           </div>
           <div className="detail-copy">
-            <div className="hero-tag">Tulio floral studio</div>
+            <div className="hero-tag">floral studio</div>
             <h1>{product.name}</h1>
             <p className="detail-description">{product.description}</p>
             <div className="product-meta" style={{ gap: '14px', marginTop: '24px' }}>
