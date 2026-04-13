@@ -72,8 +72,11 @@ export default function HomeClient() {
       <SiteHeader />
       <main className={activeProduct ? 'page-blurred' : ''}>
         <section className="section hero">
+          <video className="hero-bg-video" autoPlay muted loop playsInline>
+            <source src="/Table%20Setting%20Floral%20Arrangement%201080X1920.webm" type="video/webm" />
+          </video>
           <div className="hero-copy">
-            <div className="hero-tag">Florist · Artful bouquets · deliver at your door step</div>
+            <div className="hero-tag">From Bud to Beautiful · Artful bouquets · deliver at your door step</div>
             <TypingText text="All About Flowers" as="h1" speed={80} />
             <p>Discover hand-curated bouquets, wedding arrangements, and gift-ready blooms crafted for every moment.</p>
             <div className="cta-row">
@@ -97,13 +100,9 @@ export default function HomeClient() {
           </div>
 
           <div className="hero-media">
-            <Image
-              src="/products/popular.avif"
-              alt="Tulio bouquet"
-              width={860}
-              height={640}
-              priority
-            />
+            <video autoPlay muted loop playsInline>
+              <source src="/Table%20Setting%20Floral%20Arrangement%201080X1920.webm" type="video/webm" />
+            </video>
           </div>
         </section>
 
