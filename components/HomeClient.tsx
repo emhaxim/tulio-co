@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import products from '../data/products';
@@ -16,6 +16,8 @@ export default function HomeClient() {
   const [selectedTag, setSelectedTag] = useState('All');
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const [modalQty, setModalQty] = useState(1);
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { cartItems, addItem, removeItem, totalItems } = useCart();
 
   const categories = useMemo(
@@ -46,8 +48,16 @@ export default function HomeClient() {
 
   const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
+  const showToast = (name: string) => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    setToast(name);
+    toastTimer.current = setTimeout(() => setToast(null), 2500);
+  };
+
   const addToCart = (id: string) => {
     addItem(id);
+    const product = products.find((p) => p.id === id);
+    if (product) showToast(product.name);
   };
 
   const removeFromCart = (id: string) => {
@@ -69,6 +79,14 @@ export default function HomeClient() {
 
   return (
     <>
+      {toast && (
+        <div className="cart-toast" role="status" aria-live="polite">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span>{toast} added to cart</span>
+        </div>
+      )}
       <SiteHeader />
       <main className={activeProduct ? 'page-blurred' : ''}>
         <section className="section hero">

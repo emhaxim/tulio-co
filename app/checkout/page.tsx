@@ -15,24 +15,24 @@ const LOGO_MAP: Record<string, React.ReactNode> = {
 };
 
 const PAYMENT_METHODS = [
-  {
-    id: 'payfast',
-    label: 'PAYFAST -- Free Shipping',
-    description: "You'll be redirected to PAYFAST -- Free Shipping to complete your purchase.",
-    logos: ['VISA', 'MC', 'UnionPay'],
-  },
+  // {
+  //   id: 'payfast',
+  //   label: 'PAYFAST -- Free Shipping',
+  //   description: "You'll be redirected to PAYFAST -- Free Shipping to complete your purchase.",
+  //   logos: ['VISA', 'MC', 'UnionPay'],
+  // },
   {
     id: 'cod',
     label: 'Cash on Delivery (COD)',
     description: 'Pay in cash when your order is delivered.',
     logos: [],
   },
-  {
-    id: 'card',
-    label: 'Credit / Debit Card',
-    description: 'Enter your card details securely on the next step.',
-    logos: ['VISA', 'MC'],
-  },
+  // {
+  //   id: 'card',
+  //   label: 'Credit / Debit Card',
+  //   description: 'Enter your card details securely on the next step.',
+  //   logos: ['VISA', 'MC'],
+  // },
 ];
 
 export default function CheckoutPage() {
