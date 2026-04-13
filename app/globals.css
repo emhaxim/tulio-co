@@ -61,11 +61,11 @@ img {
 main {
   width: min(1200px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 32px 0 64px;
+  padding: 20px 0 64px;
 }
 
 .section {
-  margin-bottom: 56px;
+  margin-bottom: 8px;
 }
 
 .hero {
@@ -73,6 +73,11 @@ main {
   gap: 24px;
   grid-template-columns: minmax(0, 1.1fr) 460px;
   align-items: center;
+  position: relative;
+}
+
+.hero-bg-video {
+  display: none;
 }
 
 .hero-copy {
@@ -183,7 +188,8 @@ main {
   position: relative;
   overflow: hidden;
   border-radius: 40px;
-  min-height: 520px;
+  min-height: 440px;
+  max-height: 480px;
   background: radial-gradient(circle at top, rgba(255, 255, 255, 0.9), transparent 45%),
     linear-gradient(180deg, var(--white), var(--white) 100%);
   display: flex;
@@ -191,11 +197,15 @@ main {
   align-items: center;
 }
 
-.hero-media img {
+.hero-media img,
+.hero-media video {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .features {
@@ -889,6 +899,79 @@ main {
 @media (max-width: 960px) {
   .hero {
     grid-template-columns: 1fr;
+    position: relative;
+    min-height: 62svh;
+    overflow: hidden;
+    border-radius: 28px;
+    align-items: flex-end;
+    gap: 0;
+  }
+
+  .hero-bg-video {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    z-index: 0;
+  }
+
+  /* dark gradient so text is readable */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.08) 0%,
+      rgba(10,30,20,0.35) 40%,
+      rgba(10,30,20,0.82) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 28px 24px 36px;
+  }
+
+  /* flip text colours to white */
+  .hero-copy .hero-tag {
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hero-copy h1 {
+    color: #fff;
+  }
+
+  .hero-copy p {
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* keep search pill readable */
+  .hero-copy .input-group {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .hero-copy .input-group input {
+    color: #fff;
+  }
+
+  .hero-copy .input-group input::placeholder {
+    color: rgba(255,255,255,0.6);
+  }
+
+  .hero-media {
+    display: none;
   }
 }
 
