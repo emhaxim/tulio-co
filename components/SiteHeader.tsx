@@ -27,10 +27,10 @@ export default function SiteHeader({ showNav = true }: { showNav?: boolean }) {
     <>
       <header className="site-header">
         <nav className="site-nav">
-          <div className="site-brand">
+          <Link href="/" className="site-brand">
             <span className="brand-mark" aria-hidden="true">🌷</span>
             <span>Bud & Petal</span>
-          </div>
+          </Link>
           {showNav && (
             <div className="nav-links">
               <Link href="#shop">Shop</Link>

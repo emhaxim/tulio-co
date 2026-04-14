@@ -37,7 +37,7 @@ const PAYMENT_METHODS = [
 
 export default function CheckoutPage() {
   const { cartItems, removeItem, clearCart } = useCart();
-  const [paymentMethod, setPaymentMethod] = useState('payfast');
+  const [paymentMethod, setPaymentMethod] = useState('cod');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [fields, setFields] = useState({ name: '', email: '', address: '', city: '', phone: '', notes: '' });
   const [submitting, setSubmitting] = useState(false);
