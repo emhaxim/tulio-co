@@ -38,7 +38,7 @@ body {
   content: '';
   position: fixed;
   inset: 0;
-  background: url('/landing-background.jpg') center/cover no-repeat;
+  background: url('/landing-background.webp') center/cover no-repeat;
   opacity: 0.40;
   z-index: 0;
   pointer-events: none;

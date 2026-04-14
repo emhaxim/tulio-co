@@ -92,7 +92,7 @@ export default function HomeClient() {
         <section className="section hero">
           <Image
             className="hero-bg-video"
-            src="/beautiful-decorated-bouquet-roses.jpg"
+            src="/beautiful-decorated-bouquet-roses.webp"
             alt="Beautiful decorated bouquet of roses"
             fill
             style={{ objectFit: 'cover' }}
@@ -124,7 +124,7 @@ export default function HomeClient() {
 
           <div className="hero-media">
             <Image
-              src="/beautiful-decorated-bouquet-roses.jpg"
+              src="/beautiful-decorated-bouquet-roses.webp"
               alt="Beautiful decorated bouquet of roses"
               fill
               style={{ objectFit: 'cover' }}

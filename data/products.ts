@@ -5,7 +5,7 @@ const products = [
     description: 'Soft blue accents with creamy roses and eucalyptus for a calming gift.',
     price: 54.0,
     tag: 'Calming',
-    image: '/products/Aquamarine.avif',
+    image: '/products/Aquamarine.webp',
   },
   {
     id: 'buttercream',
@@ -13,7 +13,7 @@ const products = [
     description: 'Warm buttercream roses, peonies, and fresh greenery in an elegant wrap.',
     price: 62.0,
     tag: 'Romantic',
-    image: '/products/Buttercream.avif',
+    image: '/products/Buttercream.webp',
   },
   {
     id: 'dreamy-meadow',
@@ -21,7 +21,7 @@ const products = [
     description: 'A wildflower-inspired bouquet with colorful blooms and soft foliage.',
     price: 58.0,
     tag: 'Wild',
-    image: '/products/Dreamy Meadow.avif',
+    image: '/products/Dreamy Meadow.webp',
   },
   {
     id: 'exuberance',
@@ -29,7 +29,7 @@ const products = [
     description: 'Bold seasonal flowers and joyful color for celebrations and surprises.',
     price: 68.0,
     tag: 'Seasonal',
-    image: '/products/Exuberance.avif',
+    image: '/products/Exuberance.webp',
   },
   {
     id: 'firecracker',
@@ -37,7 +37,7 @@ const products = [
     description: 'Bright orange and red stems for an energetic, statement-making display.',
     price: 60.0,
     tag: 'Bold',
-    image: '/products/Firecracker.avif',
+    image: '/products/Firecracker.webp',
   },
   {
     id: 'full-of-grace',
@@ -45,7 +45,7 @@ const products = [
     description: 'A gentle arrangement of blush blooms and graceful greenery.',
     price: 64.0,
     tag: 'Classic',
-    image: '/products/Full of Grace.avif',
+    image: '/products/Full of Grace.webp',
   },
   {
     id: 'heartfelt',
@@ -53,7 +53,7 @@ const products = [
     description: 'Romantic pinks with luxurious textures and a sweet fragrance.',
     price: 66.0,
     tag: 'Romantic',
-    image: '/products/Heartfelt.avif',
+    image: '/products/Heartfelt.webp',
   },
   {
     id: 'lemonade',
@@ -61,7 +61,7 @@ const products = [
     description: 'Sunny yellows and citrus tones, perfect for brightening someone’s day.',
     price: 52.0,
     tag: 'Cheerful',
-    image: '/products/Lemonade.avif',
+    image: '/products/Lemonade.webp',
   },
   {
     id: 'lotta-love',
@@ -69,7 +69,7 @@ const products = [
     description: 'A vibrant, heartwarming mix with rich florals and playful greens.',
     price: 69.0,
     tag: 'Gift',
-    image: '/products/Lotta Love.avif',
+    image: '/products/Lotta Love.webp',
   },
   {
     id: 'picnic',
@@ -77,7 +77,7 @@ const products = [
     description: 'Fresh-picked style blooms with a casual, effortless charm.',
     price: 50.0,
     tag: 'Casual',
-    image: '/products/Picnic.avif',
+    image: '/products/Picnic.webp',
   },
   {
     id: 'pink-pearl',
@@ -85,7 +85,7 @@ const products = [
     description: 'Soft pink petals with pearlescent highlights for a polished gift.',
     price: 63.0,
     tag: 'Delicate',
-    image: '/products/Pink & Pearl.avif',
+    image: '/products/Pink & Pearl.webp',
   },
   {
     id: 'queen-bee',
@@ -93,7 +93,7 @@ const products = [
     description: 'Golden blooms and rich textures for a luxurious floral statement.',
     price: 72.0,
     tag: 'Luxury',
-    image: '/products/Queen bee.avif',
+    image: '/products/Queen bee.webp',
   },
   {
     id: 'sugar-rush',
@@ -101,7 +101,7 @@ const products = [
     description: 'Playful candy-colored flowers for a cheerful celebration bouquet.',
     price: 55.0,
     tag: 'Playful',
-    image: '/products/Sugar Rush.avif',
+    image: '/products/Sugar Rush.webp',
   },
   {
     id: 'sweet-lavender',
@@ -109,7 +109,7 @@ const products = [
     description: 'Calming lavender tones, ideal for gifts that soothe and delight.',
     price: 61.0,
     tag: 'Soothing',
-    image: '/products/Sweet Lavender.avif',
+    image: '/products/Sweet Lavender.webp',
   },
   {
     id: 'whimsy',
@@ -117,7 +117,7 @@ const products = [
     description: 'Light and airy petals with a playful arrangement style.',
     price: 57.0,
     tag: 'Whimsical',
-    image: '/products/Whimsy.avif',
+    image: '/products/Whimsy.webp',
   },
   {
     id: 'wild-about-u',
@@ -125,7 +125,7 @@ const products = [
     description: 'A passionate bouquet with rich tones and wild romantic flair.',
     price: 70.0,
     tag: 'Romantic',
-    image: '/products/Wild About U.avif',
+    image: '/products/Wild About U.webp',
   },
 ];
 
