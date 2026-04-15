@@ -102,26 +102,69 @@ export default function CheckoutPage() {
       <SiteHeader showNav={false} />
       <main>
         <section className="section">
-        <div className="checkout-header">
-          <div>
-            <span className="hero-tag">Checkout</span>
-            <h1>Complete your order</h1>
-            <p className="detail-description">Review your bouquet selection and enter your details to finalize the order.</p>
+        {!orderPlaced && (
+          <div className="checkout-header">
+            <div>
+              <span className="hero-tag">Checkout</span>
+              <h1>Complete your order</h1>
+              <p className="detail-description">Review your bouquet selection and enter your details to finalize the order.</p>
+            </div>
+            <Link href="/" className="button secondary">
+              Back to shop
+            </Link>
           </div>
-          <Link href="/" className="button secondary">
-            Back to shop
-          </Link>
-        </div>
+        )}
 
         {orderPlaced ? (
-          <div className="empty-state" style={{ padding: '56px 28px' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🌷</div>
-            <h2 style={{ margin: '0 0 10px', color: 'var(--green)' }}>Order placed!</h2>
-            <p style={{ color: '#6d655c', marginBottom: '28px', maxWidth: 360, marginLeft: 'auto', marginRight: 'auto' }}>
-              Thank you for your order. We&apos;ve received it and will be in touch shortly.
-            </p>
-            <Link href="/" className="button">Back to shop</Link>
-          </div>
+          <>
+            <div className="checkout-header">
+              <div>
+                <span className="hero-tag">Order placed!</span>
+                <h1>Thank you for your order</h1>
+                <p className="detail-description">We&apos;ve received it and will be in touch shortly.</p>
+              </div>
+              <Link href="/" className="button secondary">
+                Back to shop
+              </Link>
+            </div>
+            <div className="empty-state" style={{ padding: '20px 28px 16px', gap: 0 }}>
+              {/* Icon */}
+              <div style={{ width: 60, height: 60, borderRadius: '50%', background: '#e8f2ec', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.7rem', marginBottom: '12px', marginLeft: 'auto', marginRight: 'auto' }}>🌷</div>
+
+              {/* Subtitle */}
+              <p style={{ color: '#6d655c', marginBottom: '14px', maxWidth: 420, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.6 }}>
+                Your bouquet is being prepared with care. Here&apos;s what happens next:
+              </p>
+
+              {/* Steps */}
+              <div style={{ maxWidth: 480, marginLeft: 'auto', marginRight: 'auto', width: '100%', borderRadius: 12, overflow: 'hidden', border: '1px solid #deeae3', marginBottom: '14px' }}>
+                {[
+                  { step: '1', title: 'Order review',     desc: 'We confirm your order details and check availability.',      badge: 'In progress' },
+                  { step: '2', title: 'Bouquet crafting', desc: 'Our florists handcraft your bouquet fresh, just for you.',    badge: null },
+                  { step: '3', title: 'Delivery',         desc: 'Delivered to your door across Islamabad & Rawalpindi.',       badge: null },
+                ].map(({ step, title, desc, badge }, i, arr) => (
+                  <div key={step} style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '12px 20px', background: badge ? '#fff' : '#f4f6f4', borderBottom: i < arr.length - 1 ? '1px solid #deeae3' : 'none', textAlign: 'left' }}>
+                    <span style={{ minWidth: 32, height: 32, borderRadius: '50%', background: badge ? 'var(--green)' : '#dce8e1', color: badge ? '#fff' : '#8aaa96', fontSize: '0.85rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{step}</span>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 700, color: badge ? '#214B37' : '#8aaa96', marginBottom: 2 }}>{title}</div>
+                      <div style={{ fontSize: '0.875rem', color: badge ? '#6d655c' : '#a0b5a8' }}>{desc}</div>
+                    </div>
+                    {badge && (
+                      <span style={{ background: '#e8f2ec', color: '#214B37', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20, whiteSpace: 'nowrap' }}>{badge}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Footer note */}
+              <p style={{ color: '#9e9189', fontSize: '0.85rem', margin: 0 }}>
+                Questions? Reply to your{' '}
+                <a href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'emhaxim@gmail.com'}`} style={{ color: '#6d8c7a', textDecoration: 'underline', textUnderlineOffset: 2 }}>confirmation email</a>
+                {' '}or{' '}
+                <a href="mailto:emhaxim@gmail.com" style={{ color: '#6d8c7a', textDecoration: 'underline', textUnderlineOffset: 2 }}>contact us</a>.
+              </p>
+            </div>
+          </>
         ) : items.length === 0 ? (
           <div className="empty-state">
             <p>Your cart is empty. Add a bouquet and return here to checkout.</p>
