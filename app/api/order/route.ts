@@ -1,26 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-
-interface OrderItem {
-  name: string;
-  quantity: number;
-  price: number;
-}
-
-interface OrderBody {
-  name: string;
-  email: string;
-  address: string;
-  city: string;
-  phone: string;
-  notes: string;
-  paymentMethod: string;
-  items: OrderItem[];
-  total: number;
-}
+import { escapeHtml, validateOrder, type OrderBody } from '../../../lib/order';
 
 export async function POST(req: NextRequest) {
-  const body: OrderBody = await req.json();
+  let body: OrderBody;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  const errors = validateOrder(body);
+  if (errors.length > 0) {
+    return NextResponse.json({ success: false, errors }, { status: 400 });
+  }
+
   const { name, email, address, city, phone, notes, paymentMethod, items, total } = body;
 
   const transporter = nodemailer.createTransport({
@@ -37,7 +31,7 @@ export async function POST(req: NextRequest) {
     .map(
       (item) =>
         `<tr>
-          <td style="padding:10px 12px;border-bottom:1px solid #e8f0eb;">${item.name}</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #e8f0eb;">${escapeHtml(item.name)}</td>
           <td style="padding:10px 12px;border-bottom:1px solid #e8f0eb;text-align:center;">${item.quantity}</td>
           <td style="padding:10px 12px;border-bottom:1px solid #e8f0eb;text-align:right;">$${(item.price * item.quantity).toFixed(2)}</td>
         </tr>`
@@ -61,13 +55,13 @@ export async function POST(req: NextRequest) {
       <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:20px;border:1px solid #d6e6dd;">
         <h2 style="margin:0 0 16px;color:#214B37;font-size:1rem;text-transform:uppercase;letter-spacing:0.06em;">Customer Details</h2>
         <table style="width:100%;border-collapse:collapse;font-size:0.95rem;color:#214B37;">
-          <tr><td style="padding:6px 0;color:#6d8c7a;width:130px;">Name</td><td style="padding:6px 0;font-weight:600;">${name}</td></tr>
-          <tr><td style="padding:6px 0;color:#6d8c7a;">Email</td><td style="padding:6px 0;">${email}</td></tr>
-          <tr><td style="padding:6px 0;color:#6d8c7a;">Phone</td><td style="padding:6px 0;">+92 ${phone}</td></tr>
-          <tr><td style="padding:6px 0;color:#6d8c7a;">Address</td><td style="padding:6px 0;">${address}</td></tr>
-          <tr><td style="padding:6px 0;color:#6d8c7a;">City</td><td style="padding:6px 0;text-transform:capitalize;">${city}</td></tr>
-          <tr><td style="padding:6px 0;color:#6d8c7a;">Payment</td><td style="padding:6px 0;">${paymentLabels[paymentMethod] ?? paymentMethod}</td></tr>
-          ${notes ? `<tr><td style="padding:6px 0;color:#6d8c7a;vertical-align:top;">Notes</td><td style="padding:6px 0;">${notes}</td></tr>` : ''}
+          <tr><td style="padding:6px 0;color:#6d8c7a;width:130px;">Name</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(name)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6d8c7a;">Email</td><td style="padding:6px 0;">${escapeHtml(email)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6d8c7a;">Phone</td><td style="padding:6px 0;">+92 ${escapeHtml(phone)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6d8c7a;">Address</td><td style="padding:6px 0;">${escapeHtml(address)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6d8c7a;">City</td><td style="padding:6px 0;text-transform:capitalize;">${escapeHtml(city)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6d8c7a;">Payment</td><td style="padding:6px 0;">${escapeHtml(paymentLabels[paymentMethod] ?? paymentMethod)}</td></tr>
+          ${notes ? `<tr><td style="padding:6px 0;color:#6d8c7a;vertical-align:top;">Notes</td><td style="padding:6px 0;">${escapeHtml(notes)}</td></tr>` : ''}
         </table>
       </div>
 
