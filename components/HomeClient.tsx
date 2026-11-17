@@ -98,6 +98,14 @@ export default function HomeClient() {
             style={{ objectFit: 'cover' }}
             priority
           />
+          <Image
+            className="hero-bg-video"
+            src="/beautiful-decorated-bouquet-roses.webp"
+            alt="Beautiful decorated bouquet of roses"
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+          />
           <div className="hero-copy">
             <div className="hero-tag">From Bud to Beautiful · Artful bouquets · deliver at your door step</div>
             <TypingText text="All About Flowers" as="h1" speed={80} />
